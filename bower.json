@@ -1,0 +1,13 @@
+{
+  "name": "tsb",
+  "private": true,
+  "dependencies": {
+    "requirejs" : "~2.3.2",
+    "modernizr": "~2.8.2",
+    "jquery": "~3.1.1",
+    "pixi.js": "~4.3.4",
+    "howler": "~1.1.25",
+    "gsap": "~1.16.0",
+    "gsap-pixi-plugin": "~0.1.0",
+  }
+}
