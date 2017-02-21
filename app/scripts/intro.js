@@ -18,10 +18,11 @@ var game = game || {
 	        ["0xFFFFFF", 280, 473.7, 100, 25, 3, 0, 0],
 	        ["0xFFFFFF", 390, 473.7, 100, 25, 3, 0, 0]
 	    ]
-	}
+	},
+	animation : [
+		'countText'
+	]
 };
-game.animation = [];
-game.animation['countText'] = null;
 game.init = function() {
     $(function() {
         $("body").append(app.view);
