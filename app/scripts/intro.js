@@ -12,7 +12,7 @@ var game = game || {
 	        ["0xFFFFFF", 280, -25, 100, 25, 3, 1, 4],
 	        ["0xFFFFFF", 390, -25, 100, 25, 3, 1, 4]
 	    ],
-	    blockBtn: [
+	    collision: [
 	        ["0xFFFFFF", 60, 473.7, 100, 25, 3, 0, 0],
 	        ["0xFFFFFF", 170, 473.7, 100, 25, 3, 0, 0],
 	        ["0xFFFFFF", 280, 473.7, 100, 25, 3, 0, 0],
@@ -21,7 +21,11 @@ var game = game || {
 	},
 	animation : [
 		'countText'
-	]
+	],
+	block : new Array(),
+	blockDrop = new Array(),
+	blockCount : 0,
+	blockTexture : PIXI.Texture.fromImage('images/game/block.png')
 };
 game.init = function() {
     $(function() {
@@ -35,10 +39,10 @@ game.init = function() {
             console.log("All files loaded");
         })
         .load(function(loader, resources) {
-
-            game.viewBlock();
-            game.viewCount();
-            game.viewStartBtn();
+ 
+            game.displayBlock();
+            game.displayCount();
+            game.displayStartBtn();
 
             game.animation['countText'] = new TimelineLite({
                 paused: true
@@ -65,8 +69,6 @@ game.init = function() {
             app.render(app.stage);
         });
 };
-
-game.blockTexture = PIXI.Texture.fromImage('images/game/block.png');
 game.makeBlock = function(color, x, y, w, h, rds, vx, vy, rnd) {
     /*var grphcs = new PIXI.Graphics();
     grphcs.beginFill(color, 1);
@@ -83,7 +85,7 @@ game.makeBlock = function(color, x, y, w, h, rds, vx, vy, rnd) {
     grphcs.vy = vy;
     return grphcs;
 }
-game.viewBlock = function() {
+game.displayBlock = function() {
 
     game.line = new PIXI.Graphics();
     game.line.lineStyle(2, 0x000000, 1);
@@ -113,22 +115,22 @@ game.viewBlock = function() {
     game.vertical.endFill();
     game.vertical.y = -500;
 
-    game.blockBtn = [];
-    game.blockBtnGroup = new PIXI.Container();
-    for (var i in game.settings.blockBtn) {
-        var b = game.settings.blockBtn;
-        game.blockBtn[i] = new game.makeBlock(b[i][0], b[i][1], b[i][2], b[i][3], b[i][4], b[i][5], b[i][6], b[i][7], 1);
-        game.blockBtn[i].alpha = 0;
-        game.blockBtnGroup.addChild(game.blockBtn[i]);
+    game.collision = [];
+    game.collisionGroup = new PIXI.Container();
+    for (var i in game.settings.collision) {
+        var b = game.settings.collision;
+        game.collision[i] = new game.makeBlock(b[i][0], b[i][1], b[i][2], b[i][3], b[i][4], b[i][5], b[i][6], b[i][7], 1);
+        game.collision[i].alpha = 0;
+        game.collisionGroup.addChild(game.collision[i]);
     }
-    app.stage.addChild(game.blockBtnGroup);
+    app.stage.addChild(game.collisionGroup);
 
 
     app.stage.addChild(game.line);
     app.stage.addChild(game.line2);
     app.stage.addChild(game.vertical);
 }
-game.viewCount = function() {
+game.displayCount = function() {
     var style = new PIXI.TextStyle({
         fontSize: 20,
         fontWeight: 'bold',
@@ -149,7 +151,7 @@ game.viewCount = function() {
     game.countText.anchor.set(0.5);
     app.stage.addChild(game.countText);
 }
-game.viewStartBtn = function() {
+game.displayStartBtn = function() {
     var style = new PIXI.TextStyle({
         fontSize: 36,
         fontWeight: 'bold',
@@ -190,7 +192,7 @@ game.start = function() {
                     alpha: 1
                 },
                 onComplete: function() {
-                    TweenLite.to([game.blockBtn[0], game.blockBtn[1], game.blockBtn[2], game.blockBtn[3]], 1, {
+                    TweenLite.to([game.collision[0], game.collision[1], game.collision[2], game.collision[3]], 1, {
                         pixi: {
                             alpha: 1
                         }
@@ -206,15 +208,12 @@ game.start = function() {
         }
     });
 }
-game.blockCount = 0;
-game.block = new Array();
-game.blockDrop = new Array();
 game.seedRandom = function(n) {
     var total, child;
     total = (Math.floor((Math.random() * n) + 1));
     return shuffleRandom(4).splice(total - 1, n);
 }
-game.blockSeed = function() {
+game.seedBlock = function() {
     var rand, b = game.settings.block;
     if (Math.random() > 0.9995) {
         rand = 2;
@@ -283,7 +282,7 @@ game.playDrop = (function() {
     var drop = PIXI.ticker.shared;
     drop.autoStart = false;
     drop.add(function(delta) {
-        game.blockSeed();
+        game.seedBlock();
     });
     drop.stop();
     return drop;
