@@ -4,20 +4,21 @@ var app = new PIXI.Application(450, 600, {
     antialias: true
 });
 
-var game = game || {};
-game.settings = {
-    block: [
-        ["0xFFFFFF", 60, -25, 100, 25, 3, 1, 4],
-        ["0xFFFFFF", 170, -25, 100, 25, 3, 1, 4],
-        ["0xFFFFFF", 280, -25, 100, 25, 3, 1, 4],
-        ["0xFFFFFF", 390, -25, 100, 25, 3, 1, 4]
-    ],
-    blockBtn: [
-        ["0xFFFFFF", 60, 473.7, 100, 25, 3, 0, 0],
-        ["0xFFFFFF", 170, 473.7, 100, 25, 3, 0, 0],
-        ["0xFFFFFF", 280, 473.7, 100, 25, 3, 0, 0],
-        ["0xFFFFFF", 390, 473.7, 100, 25, 3, 0, 0]
-    ]
+var game = game || {
+	settings : {
+	    block: [
+	        ["0xFFFFFF", 60, -25, 100, 25, 3, 1, 4],
+	        ["0xFFFFFF", 170, -25, 100, 25, 3, 1, 4],
+	        ["0xFFFFFF", 280, -25, 100, 25, 3, 1, 4],
+	        ["0xFFFFFF", 390, -25, 100, 25, 3, 1, 4]
+	    ],
+	    blockBtn: [
+	        ["0xFFFFFF", 60, 473.7, 100, 25, 3, 0, 0],
+	        ["0xFFFFFF", 170, 473.7, 100, 25, 3, 0, 0],
+	        ["0xFFFFFF", 280, 473.7, 100, 25, 3, 0, 0],
+	        ["0xFFFFFF", 390, 473.7, 100, 25, 3, 0, 0]
+	    ]
+	}
 };
 game.animation = [];
 game.animation['countText'] = null;
